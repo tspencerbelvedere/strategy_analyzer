@@ -1,17 +1,27 @@
+"""
+Helper classes for determing the frequency of a datetime index
+particularly when the index does not have a constant frequency
+such as stock returns which do not include weekends and holidays
+"""
 
-
+from typing import Union
 
 import pandas as pd
 import numpy as np
-from typing import Union
 
 class CalendarConvention():
+    """
+    Class for Calendar Conventions (365 calendar days per year, 252 trading days)
+    """
     TRADING_DAYS = pd.Timedelta('252D')
     CALENDAR_DAYS = pd.Timedelta('365D')
 
 
 class TimeHelper:
-    def __init__():
+    """
+    Class to help with time-related operations.
+    """
+    def __init__(self) -> None:
         pass
 
     @staticmethod
@@ -72,17 +82,21 @@ class TimeHelper:
     def infer_frequency(datetimes: Union[list, np.array, pd.DatetimeIndex],
                         minimum_mode_percentage: float = 0.6) -> pd.Timedelta:
         """
-        Infers the frequency of the time series based on the most common time difference between the datetimes.
+        Infers the frequency of the time series based on the most common
+        time difference between the datetimes.
 
         Args:
-            datetimes (Union[list, np.array, pd.DatetimeIndex]): A list, numpy array, or pandas DatetimeIndex
+            datetimes (Union[list, np.array, pd.DatetimeIndex]):
+                A list, numpy array, or pandas DatetimeIndex
                 containing datetime objects to infer the frequency from.
-            minimum_mode_percentage (float, optional): The minimum percentage the most common time difference
+
+            minimum_mode_percentage (float, optional):
+                The minimum percentage the most common time difference
                 must have to be considered valid. Defaults to 0.6.
 
         Returns:
-            pd.Timedelta: The most common time difference between consecutive datetime objects in `datetimes`,
-                if it meets or exceeds the `minimum_mode_percentage`.
+            pd.Timedelta: The most common time difference between consecutive datetime objects
+                in `datetimes`, if it meets or exceeds the `minimum_mode_percentage`.
 
         Raises:
             ValueError: If the mode percentage of the most common time difference is less than
@@ -90,17 +104,21 @@ class TimeHelper:
         """
         datetimes = TimeHelper._convert_to_datetime_index(datetimes)
         time_diffs = TimeHelper._get_time_diffs_seconds(datetimes)
-        most_common_time_diff = TimeHelper._get_most_common_time_diff(time_diffs, minimum_mode_percentage)
+        most_common_time_diff = TimeHelper._get_most_common_time_diff(time_diffs,
+                                                                      minimum_mode_percentage)
         return most_common_time_diff
 
 
     @staticmethod
-    def get_num_periods_per_year(time_delta: pd.Timedelta, calendar_convention: CalendarConvention = CalendarConvention.TRADING_DAYS) -> float:
+    def get_num_periods_per_year(time_delta: pd.Timedelta,
+                                 calendar_convention: CalendarConvention = \
+                                 CalendarConvention.TRADING_DAYS) -> float:
         """
         Calculate the number of periods per year given a time delta.
 
         Args:
-            time_delta (pd.Timedelta): The time delta to calculate the number of periods per year from.
+            time_delta (pd.Timedelta): The time delta to calculate the number
+            of periods per year from.
 
         Returns:
             float: The number of periods per year.
