@@ -1,29 +1,11 @@
 """
 This module contains a class to produce a summary report of strategy performance
 """
+from strategy_analyzer.time_helpers import TimeHelper, CalendarConvention
+
 import pandas as pd
 import numpy as np
 
-class Period():
-    """
-    Get Number of days for a given period
-    or number of instances per year
-    """
-    ANNUAL = 252
-    MONTHLY = 20
-    WEEKLY = 5
-    DAILY = 1
-    TRADING_DAYS_PER_YEAR = 252.
-    CALENDAR_DAYS_PER_YEAR = 365.
-    def __init__(self):
-        pass
-
-    @staticmethod
-    def get_instances_per_year(period):
-        """
-        Returns the number of instances per year
-        """
-        return int(Period.TRADING_DAYS_PER_YEAR / float(period))
 
 class StrategyAnalyzer():
     """
@@ -58,7 +40,7 @@ class StrategyAnalyzer():
         returns = returns.fillna(0)
 
         return returns.copy().astype(float)
-    
+
     def get_levered_returns(self, target_return=None, interest_rate=None):
         """
         Calculate levered returns of a series
@@ -221,7 +203,7 @@ class StrategyAnalyzer():
         annualized_return = self.get_annualized_return(levered=levered)
         maxdd = abs(self.get_max_drawdown(levered=levered))
         return annualized_return / maxdd
-    
+
     def get_underwater(self, levered=False):
         """
         Calculates the underwater plot of a return series
@@ -239,7 +221,7 @@ class StrategyAnalyzer():
         else:
             returns = self.clean_returns
         return (returns + 1).rolling(int_period).apply(lambda x: x.prod() - 1)
- 
+
     def get_summary(self, levered=False):
         """
         Returns a dataframe of statistics for all metrics in this class

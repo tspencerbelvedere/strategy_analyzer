@@ -123,13 +123,6 @@ class TimeHelper:
         Returns:
             float: The number of periods per year.
         """
-        if time_delta == pd.Timedelta('1D'):
-            return  calendar_convention / time_delta
-        elif time_delta == pd.Timedelta('1W'):
-            return 52
-        elif time_delta == pd.Timedelta('1M'):
-            return 12
-        elif time_delta == pd.Timedelta('1Y'):
-            return 1
-        else:
-            raise ValueError(f'Time delta must be in (1D, 1W, 1M, 1Y): {time_delta}')
+        days_per_year = calendar_convention
+        return days_per_year / time_delta
+
