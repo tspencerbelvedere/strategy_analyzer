@@ -83,25 +83,11 @@ class StrategyAnalyzer():
 
         return returns
 
-
-
-    # def get_rolling_returns(self, period=Period.ANNUAL, levered=False):
-    #     """
-    #     Calculates the rolling returns of a return series
-    #     """
-    #     int_period = int(period)
-    #     if levered:
-    #         returns = self.levered_returns
-    #     else:
-    #         returns = self.clean_returns
-    #     return (returns + 1).rolling(int_period).apply(lambda x: x.prod() - 1)
-
     def get_summary(self):
         """
         Returns a dataframe of statistics for all metrics in this class
         for a given set of return streams (self.clean_returns)
         """
-        annual_period = pd.Timedelta(f'{self._days_per_year}D')
 
         annualized_return = PortfolioMetrics.get_annualized_return(self.clean_returns)
         annual_vol = PortfolioMetrics.get_annualized_volatility(self.clean_returns)
