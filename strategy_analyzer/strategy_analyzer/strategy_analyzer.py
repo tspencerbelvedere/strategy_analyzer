@@ -29,7 +29,7 @@ class StrategyAnalyzer():
                  returns_series: pd.Series,
                  risk_free_rate: float = 0.0,
                  strategy_name='Strategy',
-                 calendar_convention: CalendarConvention \
+                 days_per_year: Union[int, CalendarConvention] \
                      = CalendarConvention.TRADING_DAYS,
                 ):
         """
@@ -45,7 +45,7 @@ class StrategyAnalyzer():
         #Set the risk free rate
         self._interest_rate = risk_free_rate
         #Set the calendar convention (default is trading days = 252)
-        self._days_per_year = calendar_convention
+        self._days_per_year = days_per_year
         # Clean up returns Series
         self.clean_returns = self._clean_returns(returns_series)
         # Infer time frequency of the returns_series (daily, weekly, monthly, etc..)
@@ -137,4 +137,3 @@ class StrategyAnalyzer():
         # summary['Monthly Vol'] = monthly_vol
         summary['Annual Vol'] = annual_vol
         return summary.T
-
