@@ -7,18 +7,6 @@ from strategy_analyzer.time_helpers import TimeHelper, CalendarConvention
 from strategy_analyzer.portfolio_metrics import PortfolioMetrics
 
 import pandas as pd
-import numpy as np
-
-
-"""
-This module contains a class to produce a summary report of strategy performance
-"""
-from typing import Union
-
-from strategy_analyzer.time_helpers import TimeHelper, CalendarConvention
-
-import pandas as pd
-import numpy as np
 
 
 class StrategyAnalyzer():
